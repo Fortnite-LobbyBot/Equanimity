@@ -1,0 +1,67 @@
+import type { IUser } from '@fnlb-project/shared/types';
+import { Model, Schema, model } from 'mongoose';
+
+interface IUserMethods {
+	comparePassword(password: string): boolean;
+}
+
+type UserModel = Model<IUser, {}, IUserMethods>;
+
+const schema = new Schema<IUser, UserModel, IUserMethods>({
+	token: {
+		type: String,
+		required: true,
+		unique: true,
+		index: true,
+		dropDups: true
+	},
+	username: { type: String, required: true, trim: true },
+	email: {
+		type: String,
+		required: true,
+		unique: true,
+		dropDups: true,
+		lowercase: true,
+		trim: true
+	},
+	password: { type: String, required: true },
+	apiToken: { type: String, required: true, unique: true, trim: true },
+	connections: {
+		discord: {
+			id: { type: String, index: true },
+			username: { type: String }
+		},
+		epic: { id: { type: String, index: true }, username: { type: String } }
+	}
+});
+
+schema.pre('save', async function (next) {
+	const user = this as IUser;
+
+	if (!this.isModified('password')) return next();
+
+	try {
+		user.password = await Bun.password.hash(user.password, {
+			algorithm: 'bcrypt',
+			cost: parseInt(process.env['HASH_ROUNDS'] ?? '12')
+		});
+
+		return next();
+	} catch (err: any) {
+		return next(err);
+	}
+});
+
+schema.method('comparePassword', async function (this: IUser, pass: string) {
+	return Bun.password.verify(pass, this.password);
+});
+
+schema.set('toJSON', {
+	transform: (_, returnedObject) => {
+		returnedObject['id'] = returnedObject['_id'];
+		delete returnedObject['_id'];
+		delete returnedObject['__v'];
+	}
+});
+
+export const userModel = model<IUser, UserModel>('user', schema);

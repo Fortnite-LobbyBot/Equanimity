@@ -2,6 +2,7 @@
 	"name": "@fnlb-project/database",
 	"description": "FNLB Database Client",
 	"version": "1.0.0",
+	"private": true,
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -16,5 +17,10 @@
 		"@biomejs/biome": "^1.6.0",
 		"@types/bun": "^1.0.8",
 		"typescript": "^5.4.2"
-	}
+	},
+	"dependencies": {
+		"@fnlb-project/shared": "https://github.com/FNLB-Project/Pragmatic.git#stable",
+		"mongoose": "^8.2.1"
+	},
+	"trustedDependencies": ["@fnlb-project/shared"]
 }
