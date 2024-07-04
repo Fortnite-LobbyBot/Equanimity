@@ -188,4 +188,4 @@ schema.set('toJSON', {
 	}
 });
 
-export const categoryModel = model('category', schema);
+export const CategoryModel = model('category', schema);

@@ -6,7 +6,7 @@ import { Model, Schema } from 'mongoose';
 export declare class DatabaseClient {
 	connect(dbURI: string): Promise<void>;
 }
-export declare const botModel: import("mongoose").Model<{
+declare const BotModel: import("mongoose").Model<{
 	owner: import("mongoose").Types.ObjectId;
 	type: number;
 	nickname: string;
@@ -77,7 +77,7 @@ export declare const botModel: import("mongoose").Model<{
 }> & {
 	_id: import("mongoose").Types.ObjectId;
 }>>;
-export declare const categoryModel: import("mongoose").Model<{
+declare const CategoryModel: import("mongoose").Model<{
 	owner: import("mongoose").Types.ObjectId;
 	name: string;
 	config?: {
@@ -812,6 +812,12 @@ export interface IUserMethods {
 	comparePassword(password: string): boolean;
 }
 export type UserModel = Model<IDBUser, {}, IUserMethods>;
-export declare const userModel: UserModel;
+declare const UserModel$1: UserModel;
+
+export {
+	BotModel as botModel,
+	CategoryModel as categoryModel,
+	UserModel$1 as userModel,
+};
 
 export {};
