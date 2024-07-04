@@ -1,52 +1,11 @@
+import {
+	CategoryConfigPartyPrivacy,
+	CategoryConfigSupportedPlatforms,
+	CategoryConfigTriggerAction,
+	CategoryConfigTriggerStringDetectionMethod,
+	Locales
+} from '@fnlb-project/shared/types';
 import { Schema, model } from 'mongoose';
-
-enum SupportedLanguages {
-	En = 'en',
-	Es = 'es',
-	De = 'de',
-	Fr = 'fr',
-	It = 'it',
-	Pt = 'pt'
-}
-
-enum SupportedPlatforms {
-	Win = 'WIN',
-	Mac = 'MAC',
-	Psn = 'PSN',
-	Xbl = 'XBL',
-	Swt = 'SWT',
-	Ios = 'IOS',
-	And = 'AND',
-	Ps5 = 'PS5',
-	Xsx = 'XSX'
-}
-
-enum PartyPrivacy {
-	Public = 0,
-	Private = 1
-}
-
-enum TriggerStringDetectionMethod {
-	Equals = 0,
-	Includes = 1,
-	StartsWith = 2,
-	EndsWith = 3
-}
-
-enum TriggerAction {
-	ChatBan = 0,
-	Kick = 1,
-	Block = 2,
-	RemoveFriend = 3,
-	AddFriend = 4,
-	Promote = 5,
-	Copy = 6,
-	Mimic = 7,
-	Hide = 8,
-	Show = 9,
-	Blacklist = 10,
-	Whitelist = 11
-}
 
 const schema = new Schema({
 	owner: {
@@ -57,13 +16,13 @@ const schema = new Schema({
 	},
 	name: { type: String, required: true, trim: true },
 	config: {
-		replyLangs: { type: [String], enum: Object.values(SupportedLanguages) },
+		replyLangs: { type: [String], enum: Object.values(Locales) },
 		searchLangs: {
 			type: [String],
-			enum: Object.values(SupportedLanguages)
+			enum: Object.values(Locales)
 		},
-		platform: { type: [String], enum: Object.values(SupportedPlatforms) },
-		privacy: { type: String, enum: Object.values(PartyPrivacy) },
+		platform: { type: [String], enum: Object.values(CategoryConfigSupportedPlatforms) },
+		privacy: { type: String, enum: Object.values(CategoryConfigPartyPrivacy) },
 		prefixes: { type: [String] },
 
 		extraOwners: { type: [String] },
@@ -78,6 +37,9 @@ const schema = new Schema({
 
 		level: { type: [Number] },
 		bpLevel: { type: [Number] },
+
+		disableMatchmakingChecks: { type: [Boolean] },
+		disableJoinMessages: { type: [Boolean] },
 
 		inviteTimeout: { type: Number },
 
@@ -100,11 +62,11 @@ const schema = new Schema({
 					triggers: { type: [String] },
 					detectionMethods: {
 						type: [Number],
-						enum: Object.values(TriggerStringDetectionMethod)
+						enum: Object.values(CategoryConfigTriggerStringDetectionMethod)
 					},
 					actions: {
 						type: [Number],
-						enum: Object.values(TriggerAction)
+						enum: Object.values(CategoryConfigTriggerAction)
 					},
 					messages: { type: [String] }
 				}
@@ -117,11 +79,11 @@ const schema = new Schema({
 					triggers: { type: [String] },
 					detectionMethods: {
 						type: [Number],
-						enum: Object.values(TriggerStringDetectionMethod)
+						enum: Object.values(CategoryConfigTriggerStringDetectionMethod)
 					},
 					actions: {
 						type: [Number],
-						enum: Object.values(TriggerAction)
+						enum: Object.values(CategoryConfigTriggerAction)
 					},
 					messages: { type: [String] }
 				}
@@ -134,11 +96,11 @@ const schema = new Schema({
 					triggers: { type: [String] },
 					detectionMethods: {
 						type: [Number],
-						enum: Object.values(TriggerStringDetectionMethod)
+						enum: Object.values(CategoryConfigTriggerStringDetectionMethod)
 					},
 					actions: {
 						type: [Number],
-						enum: Object.values(TriggerAction)
+						enum: Object.values(CategoryConfigTriggerAction)
 					},
 					messages: { type: [String] }
 				}
@@ -150,7 +112,7 @@ const schema = new Schema({
 				{
 					actions: {
 						type: [Number],
-						enum: Object.values(TriggerAction)
+						enum: Object.values(CategoryConfigTriggerAction)
 					},
 					messages: { type: [String] }
 				}
@@ -162,7 +124,7 @@ const schema = new Schema({
 				{
 					actions: {
 						type: [Number],
-						enum: Object.values(TriggerAction)
+						enum: Object.values(CategoryConfigTriggerAction)
 					},
 					messages: { type: [String] }
 				}
@@ -174,7 +136,7 @@ const schema = new Schema({
 				{
 					actions: {
 						type: [Number],
-						enum: Object.values(TriggerAction)
+						enum: Object.values(CategoryConfigTriggerAction)
 					},
 					messages: { type: [String] }
 				}

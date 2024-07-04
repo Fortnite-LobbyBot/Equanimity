@@ -6,11 +6,7 @@ export class DatabaseClient {
 
 		console.log('Connecting to database...');
 
-		await mongoose
-			.connect(dbURI)
-			.catch((err) =>
-				console.error('Unable to connect to the database:', err)
-			);
+		await mongoose.connect(dbURI).catch((err) => console.error('Unable to connect to the database:', err));
 
 		mongoose.connection.on('open', () => {
 			console.log('Database connection is ready.');

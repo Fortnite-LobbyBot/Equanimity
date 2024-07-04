@@ -1,13 +1,13 @@
-import type { IUser } from '@fnlb-project/shared/types';
+import type { IDBUser } from '@fnlb-project/shared/types';
 import { Model, Schema, model } from 'mongoose';
 
 interface IUserMethods {
 	comparePassword(password: string): boolean;
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>;
+type UserModel = Model<IDBUser, {}, IUserMethods>;
 
-const schema = new Schema<IUser, UserModel, IUserMethods>({
+const schema = new Schema<IDBUser, UserModel, IUserMethods>({
 	token: {
 		type: String,
 		required: true,
@@ -36,7 +36,7 @@ const schema = new Schema<IUser, UserModel, IUserMethods>({
 });
 
 schema.pre('save', async function (next) {
-	const user = this as IUser;
+	const user = this as IDBUser;
 
 	if (!this.isModified('password')) return next();
 
@@ -52,7 +52,7 @@ schema.pre('save', async function (next) {
 	}
 });
 
-schema.method('comparePassword', async function (this: IUser, pass: string) {
+schema.method('comparePassword', async function (this: IDBUser, pass: string) {
 	return Bun.password.verify(pass, this.password);
 });
 
@@ -64,4 +64,4 @@ schema.set('toJSON', {
 	}
 });
 
-export const userModel = model<IUser, UserModel>('user', schema);
+export const userModel = model<IDBUser, UserModel>('user', schema);
