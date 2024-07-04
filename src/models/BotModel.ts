@@ -39,4 +39,4 @@ schema.set('toJSON', {
 	}
 });
 
-export const botModel = model('bot', schema);
+export const BotModel = model('bot', schema);

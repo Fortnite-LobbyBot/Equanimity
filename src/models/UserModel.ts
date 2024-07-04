@@ -12,12 +12,12 @@ const schema = new Schema<IDBUser, UserModel, IUserMethods>({
 		type: String,
 		required: true,
 		unique: true,
-		index: true,
 		dropDups: true
 	},
 	username: { type: String, required: true, trim: true },
 	email: {
 		type: String,
+		index: true,
 		required: true,
 		unique: true,
 		dropDups: true,
@@ -64,4 +64,4 @@ schema.set('toJSON', {
 	}
 });
 
-export const userModel = model<IDBUser, UserModel>('user', schema);
+export const UserModel = model<IDBUser, UserModel>('user', schema);

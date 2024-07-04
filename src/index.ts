@@ -1,5 +1,5 @@
 export { DatabaseClient } from './classes/DatabaseClient';
 
-export { botModel } from './models/BotModel';
-export { categoryModel } from './models/CategoryModel';
-export { userModel } from './models/UserModel';
+export { BotModel as botModel } from './models/BotModel';
+export { CategoryModel as categoryModel } from './models/CategoryModel';
+export { UserModel as userModel } from './models/UserModel';
