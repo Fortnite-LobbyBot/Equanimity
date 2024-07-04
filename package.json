@@ -7,7 +7,7 @@
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"scripts": {
-		"build": "bun run tsc && bun build --minify --target=bun --format=esm --outdir=./dist ./src/index.ts",
+		"build": "bun run build.ts",
 		"lint": "bunx --bun @biomejs/biome check --write ."
 	},
 	"author": "FNLB-Project",
@@ -15,6 +15,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
 		"@types/bun": "^1.1.6",
+		"bun-plugin-dts": "^0.2.3",
 		"typescript": "^5.5.3"
 	},
 	"dependencies": {
