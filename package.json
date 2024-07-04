@@ -2,19 +2,24 @@
 	"name": "@fnlb-project/database",
 	"description": "FNLB Database Client",
 	"version": "1.0.0",
+	"private": true,
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"scripts": {
-		"build": "bun run tsc && bun build --minify --target=bun --format=esm --outdir=./dist ./src/index.ts ./src/index.ts",
-		"lint": "bunx --bun @biomejs/biome check --apply .",
-		"prepare": "bun run build"
+		"build": "bun run build.ts",
+		"lint": "bunx --bun @biomejs/biome check --write ."
 	},
 	"author": "FNLB-Project",
 	"files": ["dist"],
 	"devDependencies": {
-		"@biomejs/biome": "^1.6.0",
-		"@types/bun": "^1.0.8",
-		"typescript": "^5.4.2"
+		"@biomejs/biome": "^1.8.3",
+		"@types/bun": "^1.1.6",
+		"bun-plugin-dts": "^0.2.3",
+		"typescript": "^5.5.3"
+	},
+	"dependencies": {
+		"@fnlb-project/shared": "github:Fortnite-LobbyBot/Pragmatic#stable",
+		"mongoose": "^8.4.4"
 	}
 }
