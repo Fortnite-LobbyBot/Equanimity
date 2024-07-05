@@ -5,9 +5,9 @@ interface IUserMethods {
 	comparePassword(password: string): boolean;
 }
 
-type UserModel = Model<IDBUser, {}, IUserMethods>;
+type UserModelType = Model<IDBUser, {}, IUserMethods>;
 
-const schema = new Schema<IDBUser, UserModel, IUserMethods>({
+const schema = new Schema<IDBUser, UserModelType, IUserMethods>({
 	token: {
 		type: String,
 		required: true,
@@ -77,4 +77,4 @@ schema.set('toJSON', {
 	}
 });
 
-export const UserModel = model<IDBUser, UserModel>('user', schema);
+export const UserModel = model<IDBUser, UserModelType>('user', schema);
