@@ -11,34 +11,34 @@ declare const BotModel: import("mongoose").Model<{
 	type: number;
 	nickname: string;
 	email: string;
-	parent?: import("mongoose").Types.ObjectId | null | undefined;
-	deviceAuth?: {
+	deviceAuth: {
 		accountId: string;
 		deviceId: string;
 		secret: string;
-	} | null | undefined;
+	};
+	parent?: import("mongoose").Types.ObjectId | null | undefined;
 }, {}, {}, {}, import("mongoose").Document<unknown, {}, {
 	owner: import("mongoose").Types.ObjectId;
 	type: number;
 	nickname: string;
 	email: string;
-	parent?: import("mongoose").Types.ObjectId | null | undefined;
-	deviceAuth?: {
+	deviceAuth: {
 		accountId: string;
 		deviceId: string;
 		secret: string;
-	} | null | undefined;
+	};
+	parent?: import("mongoose").Types.ObjectId | null | undefined;
 }> & {
 	owner: import("mongoose").Types.ObjectId;
 	type: number;
 	nickname: string;
 	email: string;
-	parent?: import("mongoose").Types.ObjectId | null | undefined;
-	deviceAuth?: {
+	deviceAuth: {
 		accountId: string;
 		deviceId: string;
 		secret: string;
-	} | null | undefined;
+	};
+	parent?: import("mongoose").Types.ObjectId | null | undefined;
 } & {
 	_id: import("mongoose").Types.ObjectId;
 }, Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, {
@@ -46,34 +46,34 @@ declare const BotModel: import("mongoose").Model<{
 	type: number;
 	nickname: string;
 	email: string;
-	parent?: import("mongoose").Types.ObjectId | null | undefined;
-	deviceAuth?: {
+	deviceAuth: {
 		accountId: string;
 		deviceId: string;
 		secret: string;
-	} | null | undefined;
+	};
+	parent?: import("mongoose").Types.ObjectId | null | undefined;
 }, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
 	owner: import("mongoose").Types.ObjectId;
 	type: number;
 	nickname: string;
 	email: string;
-	parent?: import("mongoose").Types.ObjectId | null | undefined;
-	deviceAuth?: {
+	deviceAuth: {
 		accountId: string;
 		deviceId: string;
 		secret: string;
-	} | null | undefined;
+	};
+	parent?: import("mongoose").Types.ObjectId | null | undefined;
 }>> & import("mongoose").FlatRecord<{
 	owner: import("mongoose").Types.ObjectId;
 	type: number;
 	nickname: string;
 	email: string;
-	parent?: import("mongoose").Types.ObjectId | null | undefined;
-	deviceAuth?: {
+	deviceAuth: {
 		accountId: string;
 		deviceId: string;
 		secret: string;
-	} | null | undefined;
+	};
+	parent?: import("mongoose").Types.ObjectId | null | undefined;
 }> & {
 	_id: import("mongoose").Types.ObjectId;
 }>>;

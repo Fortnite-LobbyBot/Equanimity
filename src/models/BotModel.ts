@@ -14,20 +14,21 @@ const schema = new Schema({
 		type: String,
 		required: true,
 		unique: true,
-		dropDups: true,
 		lowercase: true
 	},
 	deviceAuth: {
-		accountId: {
-			type: String,
-			required: true,
-			unique: true,
-			dropDups: true,
-			lowercase: true,
-			trim: true
-		},
-		deviceId: { type: String, required: true, lowercase: true, trim: true },
-		secret: { type: String, required: true, trim: true }
+		required: true,
+		type: {
+			accountId: {
+				type: String,
+				required: true,
+				unique: true,
+				lowercase: true,
+				trim: true
+			},
+			deviceId: { type: String, required: true, lowercase: true, trim: true },
+			secret: { type: String, required: true, trim: true }
+		}
 	}
 });
 
