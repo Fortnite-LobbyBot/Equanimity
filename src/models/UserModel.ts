@@ -11,8 +11,7 @@ const schema = new Schema<IDBUser, UserModel, IUserMethods>({
 	token: {
 		type: String,
 		required: true,
-		unique: true,
-		dropDups: true
+		unique: true
 	},
 	username: { type: String, required: true, trim: true },
 	email: {
@@ -20,7 +19,6 @@ const schema = new Schema<IDBUser, UserModel, IUserMethods>({
 		index: true,
 		required: true,
 		unique: true,
-		dropDups: true,
 		lowercase: true,
 		trim: true
 	},
@@ -28,10 +26,25 @@ const schema = new Schema<IDBUser, UserModel, IUserMethods>({
 	apiToken: { type: String, required: true, unique: true, trim: true },
 	connections: {
 		discord: {
-			id: { type: String, index: true },
-			username: { type: String }
+			id: {
+				type: String,
+				index: true,
+				unique: true,
+				sparse: true
+			},
+			username: {
+				type: String
+			}
 		},
-		epic: { id: { type: String, index: true }, username: { type: String } }
+		epic: {
+			id: {
+				type: String,
+				index: true,
+				unique: true,
+				sparse: true
+			},
+			username: { type: String }
+		}
 	}
 });
 
@@ -42,8 +55,8 @@ schema.pre('save', async function (next) {
 
 	try {
 		user.password = await Bun.password.hash(user.password, {
-			algorithm: 'bcrypt',
-			cost: parseInt(process.env['HASH_ROUNDS'] ?? '12')
+			algorithm: 'argon2id',
+			timeCost: parseInt(process.env['HASH_ROUNDS'] ?? '3')
 		});
 
 		return next();
