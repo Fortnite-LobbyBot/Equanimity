@@ -8,7 +8,9 @@
 	"types": "./dist/index.d.ts",
 	"scripts": {
 		"build": "bun run build.ts",
-		"lint": "bunx --bun @biomejs/biome check --write ."
+		"lint": "bun run lint:biome && bun run lint:tsc",
+		"lint:biome": "bun biome check --write .",
+		"lint:tsc": "bun tsc --noEmit"
 	},
 	"author": "FNLB-Project",
 	"files": ["dist"],
