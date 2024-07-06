@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { SchemaUtil } from '../classes/SchemaUtil';
 
 const schema = new Schema({
 	owner: {
@@ -33,11 +34,7 @@ const schema = new Schema({
 });
 
 schema.set('toJSON', {
-	transform: (_, returnedObject) => {
-		returnedObject['id'] = returnedObject['_id'];
-		delete returnedObject['_id'];
-		delete returnedObject['__v'];
-	}
+	transform: SchemaUtil.transformSchemaToJSON
 });
 
 export const BotModel = model('bot', schema);

@@ -1,7 +1,7 @@
 {
 	"name": "@fnlb-project/database",
 	"description": "FNLB Database Client",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"private": true,
 	"type": "module",
 	"main": "./src/index.ts",
