@@ -59,7 +59,7 @@ const schema = new Schema(
 			async findByAPIToken(id: string, auth: string) {
 				const targetUser = await this.findById(id);
 
-				if (!targetUser?.token || targetUser.apiToken !== auth) return null;
+				if (!targetUser?.apiToken || targetUser.apiToken !== auth) return null;
 
 				return targetUser;
 			}
