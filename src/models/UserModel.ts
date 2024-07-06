@@ -44,15 +44,15 @@ const schema = new Schema(
 	},
 	{
 		methods: {
-			comparePassword: async function (pass: string) {
+			async comparePassword(pass: string) {
 				return Bun.password.verify(pass, this.password);
 			}
 		},
 		statics: {
-			findByToken: async function (id: string, auth: string) {
+			async findByToken(id: string, auth: string) {
 				const targetUser = await this.findById(id);
 
-				if (targetUser?.token !== auth) return null;
+				if (!targetUser?.token || targetUser.token !== auth) return null;
 
 				return targetUser;
 			}
