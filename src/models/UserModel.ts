@@ -1,62 +1,75 @@
-import type { IDBUser } from '@fnlb-project/shared/types';
-import { Model, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import { SchemaUtil } from '../classes/SchemaUtil';
 
-interface IUserMethods {
-	comparePassword(password: string): boolean;
-}
-
-type UserModelType = Model<IDBUser, {}, IUserMethods>;
-
-const schema = new Schema<IDBUser, UserModelType, IUserMethods>({
-	token: {
-		type: String,
-		required: true,
-		unique: true
-	},
-	username: { type: String, required: true, trim: true },
-	email: {
-		type: String,
-		index: true,
-		required: true,
-		unique: true,
-		lowercase: true,
-		trim: true
-	},
-	password: { type: String, required: true },
-	apiToken: { type: String, required: true, unique: true, trim: true },
-	connections: {
-		discord: {
-			id: {
-				type: String,
-				index: true,
-				unique: true,
-				sparse: true
+const schema = new Schema(
+	{
+		token: {
+			type: String,
+			required: true,
+			unique: true
+		},
+		username: { type: String, required: true, trim: true },
+		email: {
+			type: String,
+			index: true,
+			required: true,
+			unique: true,
+			lowercase: true,
+			trim: true
+		},
+		password: { type: String, required: true },
+		apiToken: { type: String, required: true, unique: true, trim: true },
+		connections: {
+			discord: {
+				id: {
+					type: String,
+					index: true,
+					unique: true,
+					sparse: true
+				},
+				username: {
+					type: String
+				}
 			},
-			username: {
-				type: String
+			epic: {
+				id: {
+					type: String,
+					index: true,
+					unique: true,
+					sparse: true
+				},
+				username: { type: String }
+			}
+		}
+	},
+	{
+		methods: {
+			comparePassword: async function (pass: string) {
+				return Bun.password.verify(pass, this.password);
 			}
 		},
-		epic: {
-			id: {
-				type: String,
-				index: true,
-				unique: true,
-				sparse: true
-			},
-			username: { type: String }
+		statics: {
+			findByToken: async function (id: string, auth: string) {
+				const targetUser = await this.findById(id);
+
+				if (targetUser?.token !== auth) return null;
+
+				return targetUser;
+			}
 		}
 	}
-});
+);
 
 schema.pre('save', async function (next) {
-	const user = this as IDBUser;
-
 	if (!this.isModified('password')) return next();
 
 	try {
-		user.password = await Bun.password.hash(user.password, {
-			algorithm: 'argon2id',
-			timeCost: parseInt(process.env['HASH_ROUNDS'] ?? '3')
+		this.password = await Bun.password.hash(this.password, {
+			algorithm:
+				(process.env['SAVE_ACCOUNT_ALGORITHM'] as 'bcrypt' | 'argon2id' | 'argon2d' | 'argon2i' | undefined) ||
+				'argon2id',
+			timeCost: parseInt(process.env['SAVE_ACCOUNT_TIME_COST'] || '3'),
+			cost: parseInt(process.env['SAVE_ACCOUNT_ALGORITHM_COST'] || '12')
 		});
 
 		return next();
@@ -65,16 +78,8 @@ schema.pre('save', async function (next) {
 	}
 });
 
-schema.method('comparePassword', async function (this: IDBUser, pass: string) {
-	return Bun.password.verify(pass, this.password);
-});
-
 schema.set('toJSON', {
-	transform: (_, returnedObject) => {
-		returnedObject['id'] = returnedObject['_id'];
-		delete returnedObject['_id'];
-		delete returnedObject['__v'];
-	}
+	transform: SchemaUtil.transformSchemaToJSON
 });
 
-export const UserModel = model<IDBUser, UserModelType>('user', schema);
+export const UserModel = model('user', schema);
