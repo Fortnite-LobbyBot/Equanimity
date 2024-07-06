@@ -55,6 +55,13 @@ const schema = new Schema(
 				if (!targetUser?.token || targetUser.token !== auth) return null;
 
 				return targetUser;
+			},
+			async findByAPIToken(id: string, auth: string) {
+				const targetUser = await this.findById(id);
+
+				if (!targetUser?.token || targetUser.apiToken !== auth) return null;
+
+				return targetUser;
 			}
 		}
 	}
